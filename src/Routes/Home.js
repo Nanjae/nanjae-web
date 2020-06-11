@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
-import useWindowDimensions from "../Hooks/useWindowDimensions";
-import Menu from "../Menu/Menu";
+import { connect } from "react-redux";
+import { actionCreators } from "../store";
+import Menu from "../components/Menu/Menu";
+import { useMove } from "react-use-gesture";
 
 const Wrapper = styled.div`
   overflow-x: hidden;
@@ -10,10 +12,10 @@ const Wrapper = styled.div`
 const ContentWrapper = styled.div`
   margin-left: 10px;
   height: fit-content;
-  transform: translateX(${(props) => (props.enterMenu ? "270px" : "0px")});
+  transform: translateX(${(props) => (props.menuBool ? "270px" : "0px")});
   display: flex;
   flex-direction: column;
-  transition: transform 0.3s;
+  transition: transform 0.4s;
 `;
 
 const ContentTopDiv = styled.div`
@@ -42,19 +44,36 @@ const ContentBottomDiv = styled.div`
   align-items: center;
 `;
 
-export default () => {
-  const [enterMenu, setEnterMenu] = useState(false);
-  const { windowHeight } = useWindowDimensions();
+const Home = ({ menus, toggleMenu, resizeWindow }) => {
+  useEffect(() => {
+    const handleResize = () => {
+      resizeWindow(window.innerWidth, window.innerHeight);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  });
+
+  const bind = useMove(({ xy, movement }) => {
+    if (movement[0] <= 0) {
+      if (xy[0] <= 40) {
+        toggleMenu(true);
+      }
+    } else {
+      if (xy[0] > 40) {
+        toggleMenu(false);
+      }
+    }
+  });
 
   return (
     <>
-      <Wrapper>
-        <Menu
-          windowHeight={windowHeight}
-          enterMenu={enterMenu}
-          setEnterMenu={setEnterMenu}
-        />
-        <ContentWrapper enterMenu={enterMenu}>
+      <Wrapper {...bind()}>
+        <Menu />
+        <ContentWrapper menuBool={menus.menuBool}>
           <ContentTopDiv>탑 테스트</ContentTopDiv>
           <ContentCenterDiv>
             <ContentCenterInner>센터 테스트</ContentCenterInner>
@@ -65,3 +84,17 @@ export default () => {
     </>
   );
 };
+
+const mapStateToProps = (state) => {
+  return { menus: state.menus, windows: state.windows };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    toggleMenu: (menuBool) => dispatch(actionCreators.toggleMenu(menuBool)),
+    resizeWindow: (windowWidth, windowHeight) =>
+      dispatch(actionCreators.resizeWindow(windowWidth, windowHeight)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);
