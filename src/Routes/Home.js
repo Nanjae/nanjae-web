@@ -2,49 +2,17 @@ import React, { useEffect } from "react";
 import styled from "styled-components";
 import { connect } from "react-redux";
 import { actionCreators } from "../store";
-import Menu from "../components/Menu/Menu";
+import Menu from "../components/Menu";
 import { useMove } from "react-use-gesture";
+import Content from "../components/Content";
 
 const Wrapper = styled.div`
   overflow-x: hidden;
 `;
 
-const ContentWrapper = styled.div`
-  margin-left: 10px;
-  height: fit-content;
-  transform: translateX(${(props) => (props.menuBool ? "270px" : "0px")});
-  display: flex;
-  flex-direction: column;
-  transition: transform 0.4s;
-`;
+const Home = ({ windows, toggleMenu, resizeWindow }) => {
+  // console.log(windows);
 
-const ContentTopDiv = styled.div`
-  height: 70px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-const ContentCenterDiv = styled.div`
-  height: 1200px;
-`;
-
-const ContentCenterInner = styled.div`
-  height: 100%;
-  background-color: lightgray;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-const ContentBottomDiv = styled.div`
-  height: 70px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-const Home = ({ menus, toggleMenu, resizeWindow }) => {
   useEffect(() => {
     const handleResize = () => {
       resizeWindow(window.innerWidth, window.innerHeight);
@@ -63,7 +31,7 @@ const Home = ({ menus, toggleMenu, resizeWindow }) => {
         toggleMenu(true);
       }
     } else {
-      if (xy[0] > 40) {
+      if (xy[0] > 280) {
         toggleMenu(false);
       }
     }
@@ -73,20 +41,14 @@ const Home = ({ menus, toggleMenu, resizeWindow }) => {
     <>
       <Wrapper {...bind()}>
         <Menu />
-        <ContentWrapper menuBool={menus.menuBool}>
-          <ContentTopDiv>탑 테스트</ContentTopDiv>
-          <ContentCenterDiv>
-            <ContentCenterInner>센터 테스트</ContentCenterInner>
-          </ContentCenterDiv>
-          <ContentBottomDiv>바텀 테스트</ContentBottomDiv>
-        </ContentWrapper>
+        <Content />
       </Wrapper>
     </>
   );
 };
 
 const mapStateToProps = (state) => {
-  return { menus: state.menus, windows: state.windows };
+  return { windows: state.windows };
 };
 
 const mapDispatchToProps = (dispatch) => {

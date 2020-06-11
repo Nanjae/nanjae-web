@@ -6,12 +6,12 @@ const Wrapper = styled.div`
   position: fixed;
   z-index: 50;
   width: 280px;
-  transform: translateX(${(props) => (props.menuBool ? "0px" : "-270px")});
   height: ${(props) => props.windowHeight}px;
-  transition: transform 0.4s;
   display: flex;
   justify-content: flex-start;
   background-color: #3a3a3a;
+  transform: translateX(${(props) => (props.menuBool ? "0px" : "-270px")});
+  transition: transform 0.4s;
 `;
 
 const Inner = styled.div`
