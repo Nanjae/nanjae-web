@@ -2,9 +2,9 @@ import React, { useEffect } from "react";
 import styled from "styled-components";
 import { connect } from "react-redux";
 import { actionCreators } from "../store";
-import Menu from "../components/Menu";
+import Menu from "../Components/Menu";
 import { useMove } from "react-use-gesture";
-import Content from "../components/Content";
+import Content from "../Components/Content";
 
 const Wrapper = styled.div`
   overflow-x: hidden;
