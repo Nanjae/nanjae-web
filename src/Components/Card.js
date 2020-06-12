@@ -30,8 +30,8 @@ const IconBox = styled.div`
   z-index: ${(props) => (props.focused ? 50 : 0)};
   opacity: ${(props) => (props.focused ? 1 : 0)};
   background-color: #ff6833;
-  width: 34px;
-  height: 34px;
+  width: 33px;
+  height: 33px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -42,10 +42,10 @@ const IconBox = styled.div`
 
 const IconPlus = styled.div`
   background-image: url(${(props) => props.url});
-  background-size: contain;
+  background-size: cover;
   background-position: center;
-  width: 20px;
-  height: 20px;
+  width: 18px;
+  height: 18px;
 `;
 
 const ImageDiv = styled.div`
