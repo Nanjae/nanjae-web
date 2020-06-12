@@ -15,6 +15,11 @@ const CardData = [
   { id: 13, bgColor: "#DC2" },
   { id: 14, bgColor: "#EB1" },
   { id: 15, bgColor: "#FA0" },
+  { id: 16, bgColor: "#09F" },
+  { id: 17, bgColor: "#18E" },
+  { id: 18, bgColor: "#27D" },
+  { id: 19, bgColor: "#36C" },
+  { id: 20, bgColor: "#45B" },
 ];
 
 export default CardData;

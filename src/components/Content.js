@@ -37,8 +37,9 @@ const CenterInner = styled.div`
 
 const CardRowDiv = styled.div`
   width: ${(props) => props.windowWidth - 10}px;
-  height: ${(props) => (props.windowWidth - 10) * 0.1875}px;
+  height: ${(props) => ((props.windowWidth - 10) * 0.75) / props.rowMaxCount}px;
   display: flex;
+  justify-content: flex-start;
 `;
 
 const BottomDiv = styled.div`
@@ -49,7 +50,21 @@ const BottomDiv = styled.div`
 `;
 
 const Content = ({ menus, windows }) => {
-  const rowArray = new Array(Math.ceil(CardData.length / 4)).fill(null);
+  const rowMaxCount =
+    windows.windowWidth >= 1700
+      ? 5
+      : windows.windowWidth >= 1280
+      ? 4
+      : windows.windowWidth >= 850
+      ? 3
+      : windows.windowWidth >= 430
+      ? 2
+      : 1;
+  const rowArray = new Array(Math.ceil(CardData.length / rowMaxCount)).fill(
+    null
+  );
+
+  const cardWidth = (windows.windowWidth - 10) / rowMaxCount;
 
   return (
     <>
@@ -59,11 +74,25 @@ const Content = ({ menus, windows }) => {
           <CenterInner>
             {rowArray.map((_, index) => {
               return (
-                <CardRowDiv windowWidth={windows.windowWidth} key={index}>
-                  <Card data={CardData[index * 4 + 0]} />
-                  <Card data={CardData[index * 4 + 1]} />
-                  <Card data={CardData[index * 4 + 2]} />
-                  <Card data={CardData[index * 4 + 3]} />
+                <CardRowDiv
+                  rowMaxCount={rowMaxCount}
+                  windowWidth={windows.windowWidth}
+                  key={index}
+                >
+                  {CardData.slice(
+                    index * rowMaxCount,
+                    (index + 1) * rowMaxCount
+                  ).map((data, index) => {
+                    return (
+                      <Card
+                        key={index}
+                        index={index}
+                        cardWidth={cardWidth}
+                        rowMaxCount={rowMaxCount}
+                        data={data}
+                      />
+                    );
+                  })}
                 </CardRowDiv>
               );
             })}
