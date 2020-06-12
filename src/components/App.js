@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import Home from "../routes/Home";
+import { DefaultRoute } from "./Routes";
 import GlobalStyles from "../styles/GlobalStyles";
 import { HashRouter as Router } from "react-router-dom";
 
@@ -14,7 +14,7 @@ export default () => {
       <GlobalStyles />
       <Router>
         <Wrapper>
-          <Home />
+          <DefaultRoute />
         </Wrapper>
       </Router>
     </>
