@@ -1,19 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { connect } from "react-redux";
 import Card from "./Card";
-import CardData from "./CardData";
+import CardData, { getSortedCardData } from "./CardData";
 
 const Wrapper = styled.div`
-  height: fit-content;
+  height: ${(props) =>
+    ((props.windowWidth - 20) * 0.75 * props.columnMaxCount) /
+      props.rowMaxCount +
+    140}px;
   display: flex;
   flex-direction: column;
   margin-left: 10px;
   transition: transform 0.4s;
   transform: translateX(${(props) => (props.menuBool ? "270px" : "0px")});
+  align-items: center;
 `;
 
 const TopDiv = styled.div`
+  position: relative;
+  width: 100%;
   height: 70px;
   display: flex;
   justify-content: center;
@@ -21,28 +27,20 @@ const TopDiv = styled.div`
 `;
 
 const CenterDiv = styled.div`
-  display: flex;
-  height: fit-content;
-  justify-content: center;
-`;
-
-const CenterInner = styled.div`
-  height: fit-content;
+  position: relative;
+  width: ${(props) => props.windowWidth - 20}px;
+  height: ${(props) =>
+    ((props.windowWidth - 20) * 0.75 * props.columnMaxCount) /
+    props.rowMaxCount}px;
   background-color: lightgray;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-`;
-
-const CardRowDiv = styled.div`
-  width: ${(props) => props.windowWidth - 10}px;
-  height: ${(props) => ((props.windowWidth - 10) * 0.75) / props.rowMaxCount}px;
-  display: flex;
   justify-content: flex-start;
+  align-items: flex-start;
 `;
 
 const BottomDiv = styled.div`
+  position: relative;
+  width: 100%;
   height: 70px;
   display: flex;
   justify-content: center;
@@ -50,6 +48,9 @@ const BottomDiv = styled.div`
 `;
 
 const Content = ({ menus, windows }) => {
+  const [term, setTerm] = useState(-1);
+  let sortedCardData = getSortedCardData(term);
+
   const rowMaxCount =
     windows.windowWidth >= 1700
       ? 5
@@ -60,43 +61,46 @@ const Content = ({ menus, windows }) => {
       : windows.windowWidth >= 430
       ? 2
       : 1;
-  const rowArray = new Array(Math.ceil(CardData.length / rowMaxCount)).fill(
-    null
-  );
 
-  const cardWidth = (windows.windowWidth - 10) / rowMaxCount;
+  const columnMaxCount = Math.ceil(CardData.length / rowMaxCount);
+
+  const cardWidth = (windows.windowWidth - 20) / rowMaxCount;
 
   return (
     <>
-      <Wrapper menuBool={menus.menuBool}>
-        <TopDiv>탑 테스트</TopDiv>
-        <CenterDiv>
-          <CenterInner>
-            {rowArray.map((_, index) => {
-              return (
-                <CardRowDiv
-                  rowMaxCount={rowMaxCount}
-                  windowWidth={windows.windowWidth}
-                  key={index}
-                >
-                  {CardData.slice(
-                    index * rowMaxCount,
-                    (index + 1) * rowMaxCount
-                  ).map((data, index) => {
-                    return (
-                      <Card
-                        key={index}
-                        index={index}
-                        cardWidth={cardWidth}
-                        rowMaxCount={rowMaxCount}
-                        data={data}
-                      />
-                    );
-                  })}
-                </CardRowDiv>
-              );
-            })}
-          </CenterInner>
+      <Wrapper
+        windowWidth={windows.windowWidth}
+        rowMaxCount={rowMaxCount}
+        columnMaxCount={columnMaxCount}
+        menuBool={menus.menuBool}
+      >
+        <TopDiv
+          onClick={() => {
+            setTerm(term === 4 ? -1 : term + 1);
+          }}
+        >
+          탑 테스트
+        </TopDiv>
+        <CenterDiv
+          windowWidth={windows.windowWidth}
+          rowMaxCount={rowMaxCount}
+          columnMaxCount={columnMaxCount}
+        >
+          {CardData.map((data, index) => {
+            const sortedIndex = sortedCardData.findIndex(
+              (x) => x.id === data.id
+            );
+            return (
+              <Card
+                key={index}
+                cardWidth={cardWidth}
+                data={data}
+                rowMaxCount={rowMaxCount}
+                termBool={term >= 0 ? data.term === term : true}
+                sortedIndex={sortedIndex}
+              />
+            );
+          })}
         </CenterDiv>
         <BottomDiv>바텀 테스트</BottomDiv>
       </Wrapper>

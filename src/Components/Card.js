@@ -3,31 +3,38 @@ import styled from "styled-components";
 import icon_plus from "../Assets/Icons/icon_plus.png";
 
 const Wrapper = styled.div`
+  position: absolute;
   width: ${(props) => props.cardWidth}px;
   height: ${(props) => props.cardWidth * 0.75}px;
   display: flex;
   justify-content: center;
   align-items: flex-end;
   font-size: 20px;
-  overflow: hidden;
+  transform: translate(
+    ${(props) => props.cardWidth * (props.sortedIndex % props.rowMaxCount)}px,
+    ${(props) =>
+      props.cardWidth *
+      0.75 *
+      Math.floor(props.sortedIndex / props.rowMaxCount)}px
+  );
+  z-index: ${(props) => (props.focused ? 10 : 0)};
+  opacity: ${(props) => (props.termBool ? 1 : 0.2)};
+  transition: transform 0.4s, opacity 0.4s;
 `;
 
 const OpacityDiv = styled.div`
-  position: absolute;
   opacity: ${(props) => (props.focused ? 0 : 0.3)};
-  width: ${(props) => props.cardWidth}px;
-  height: ${(props) => props.cardWidth * 0.75}px;
-  z-index: ${(props) => (props.focused ? 50 : 0)};
+  width: 100%;
+  height: 100%;
   display: flex;
   align-items: flex-end;
   background-color: white;
   transform: translateY(${(props) => (props.focused ? "-70px" : "0px")});
-  transition: z-index 0.4s, transform 0.4s, opacity 0.4s;
+  transition: transform 0.4s, opacity 0.4s;
 `;
 
 const IconBox = styled.div`
   position: absolute;
-  z-index: ${(props) => (props.focused ? 50 : 0)};
   opacity: ${(props) => (props.focused ? 1 : 0)};
   background-color: #ff6833;
   width: 33px;
@@ -37,7 +44,7 @@ const IconBox = styled.div`
   align-items: center;
   transform: translateY(${(props) => (props.focused ? "-53px" : "0px")});
   border-radius: 100%;
-  transition: z-index 0.4s, transform 0.4s, opacity 0.4s;
+  transition: transform 0.4s, opacity 0.4s;
 `;
 
 const IconPlus = styled.div`
@@ -50,27 +57,27 @@ const IconPlus = styled.div`
 
 const ImageDiv = styled.div`
   position: absolute;
-  width: ${(props) => props.cardWidth}px;
-  height: ${(props) => props.cardWidth * 0.75}px;
-  z-index: ${(props) => (props.focused ? 50 : 0)};
+  width: 100%;
+  height: 100%;
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   background-color: ${(props) => props.bgColor};
   transform: translateY(${(props) => (props.focused ? "-70px" : "0px")});
-  transition: z-index 0.4s, transform 0.4s;
+  transition: transform 0.4s;
+  justify-content: center;
+  color: white;
 `;
 
 const TextDiv = styled.div`
   position: absolute;
-  width: ${(props) => props.cardWidth}px;
-  height: ${(props) => props.cardWidth * 0.75}px;
-  z-index: ${(props) => (props.focused ? 50 : 0)};
+  width: 100%;
+  height: 100%;
   transform: translateY(${(props) => (props.focused ? "70px" : "0px")});
   background-color: #1f1f1f;
   display: flex;
   justify-content: center;
   align-items: flex-end;
-  transition: z-index 0.4s, transform 0.4s;
+  transition: transform 0.4s;
 `;
 
 const TextInner = styled.div`
@@ -111,7 +118,7 @@ const StringText = styled.div`
   text-align: center;
 `;
 
-const Card = ({ rowMaxCount, data, cardWidth }) => {
+const Card = ({ cardWidth, data, rowMaxCount, sortedIndex, termBool }) => {
   const [focused, setFocused] = useState(false);
 
   return (
@@ -120,12 +127,16 @@ const Card = ({ rowMaxCount, data, cardWidth }) => {
         cardWidth={cardWidth}
         focused={focused}
         onMouseEnter={() => {
-          setFocused(true);
+          if (termBool) {
+            setFocused(true);
+          }
         }}
         onMouseLeave={() => {
           setFocused(false);
         }}
         rowMaxCount={rowMaxCount}
+        sortedIndex={sortedIndex}
+        termBool={termBool}
       >
         <TextDiv
           cardWidth={cardWidth}
@@ -144,7 +155,9 @@ const Card = ({ rowMaxCount, data, cardWidth }) => {
           rowMaxCount={rowMaxCount}
           bgColor={data.bgColor}
           focused={focused}
-        ></ImageDiv>
+        >
+          TERM = {data.term}
+        </ImageDiv>
         <IconBox focused={focused}>
           <IconPlus url={icon_plus} />
         </IconBox>
