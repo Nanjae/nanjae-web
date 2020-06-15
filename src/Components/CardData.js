@@ -1,14 +1,20 @@
+// -1 = REFRESH
+// 0 = ALL
+// 1 = REACT
+// 2 = FULL-STACK
+// 99 = OTHERS
+
 const CardData = [
   {
     id: 0,
-    term: 3,
+    term: 2,
     bgColor: "#09F",
     titleText: "타이틀 TITLE 1",
     stringText: "텍스트 TEXT 1",
   },
   {
     id: 1,
-    term: 0,
+    term: 1,
     bgColor: "#18E",
     titleText: "타이틀 TITLE 2",
     stringText: "텍스트 TEXT 2",
@@ -43,7 +49,7 @@ const CardData = [
   },
   {
     id: 6,
-    term: 0,
+    term: 1,
     bgColor: "#639",
     titleText: "타이틀 TITLE 7",
     stringText: "텍스트 TEXT 7",
@@ -57,14 +63,14 @@ const CardData = [
   },
   {
     id: 8,
-    term: 0,
+    term: 1,
     bgColor: "#817",
     titleText: "타이틀 TITLE 9",
     stringText: "텍스트 TEXT 9",
   },
   {
     id: 9,
-    term: 3,
+    term: 1,
     bgColor: "#906",
     titleText: "타이틀 TITLE 10",
     stringText: "텍스트 TEXT 10",
@@ -78,73 +84,66 @@ const CardData = [
   },
   {
     id: 11,
-    term: 3,
+    term: 1,
     bgColor: "#BE4",
     titleText: "타이틀 TITLE 12",
     stringText: "텍스트 TEXT 12",
   },
   {
     id: 12,
-    term: 4,
+    term: 99,
     bgColor: "#CD3",
     titleText: "타이틀 TITLE 13",
     stringText: "텍스트 TEXT 13",
   },
   {
     id: 13,
-    term: 1,
+    term: 99,
     bgColor: "#DC2",
     titleText: "타이틀 TITLE 14",
     stringText: "텍스트 TEXT 14",
   },
   {
     id: 14,
-    term: 0,
+    term: 99,
     bgColor: "#EB1",
     titleText: "타이틀 TITLE 15",
     stringText: "텍스트 TEXT 15",
   },
   {
     id: 15,
-    term: 4,
+    term: 99,
     bgColor: "#FA0",
     titleText: "타이틀 TITLE 16",
     stringText: "텍스트 TEXT 16",
   },
   {
     id: 16,
-    term: 1,
+    term: 99,
     bgColor: "#09F",
     titleText: "타이틀 TITLE 17",
     stringText: "텍스트 TEXT 17",
   },
   {
     id: 17,
-    term: 3,
+    term: 99,
     bgColor: "#18E",
     titleText: "타이틀 TITLE 18",
     stringText: "텍스트 TEXT 18",
   },
   {
     id: 18,
-    term: 2,
+    term: 99,
     bgColor: "#27D",
     titleText: "타이틀 TITLE 19",
     stringText: "텍스트 TEXT 19",
   },
   {
     id: 19,
-    term: 3,
+    term: 99,
     bgColor: "#36C",
     titleText: "타이틀 TITLE 20",
     stringText: "텍스트 TEXT 20",
-  },
-  {
-    id: 20,
-    term: 4,
-    bgColor: "#45B",
-    titleText: "타이틀 TITLE 21",
-    stringText: "텍스트 TEXT 21",
   },
 ];
 

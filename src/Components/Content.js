@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import { connect } from "react-redux";
 import Card from "./Card";
@@ -47,9 +47,8 @@ const BottomDiv = styled.div`
   align-items: center;
 `;
 
-const Content = ({ menus, windows }) => {
-  const [term, setTerm] = useState(-1);
-  let sortedCardData = getSortedCardData(term);
+const Content = ({ menus, windows, terms }) => {
+  let sortedCardData = getSortedCardData(terms.term);
 
   const rowMaxCount =
     windows.windowWidth >= 1700
@@ -74,13 +73,7 @@ const Content = ({ menus, windows }) => {
         columnMaxCount={columnMaxCount}
         menuBool={menus.menuBool}
       >
-        <TopDiv
-          onClick={() => {
-            setTerm(term === 4 ? -1 : term + 1);
-          }}
-        >
-          탑 테스트
-        </TopDiv>
+        <TopDiv>탑 테스트</TopDiv>
         <CenterDiv
           windowWidth={windows.windowWidth}
           rowMaxCount={rowMaxCount}
@@ -96,7 +89,7 @@ const Content = ({ menus, windows }) => {
                 cardWidth={cardWidth}
                 data={data}
                 rowMaxCount={rowMaxCount}
-                termBool={term >= 0 ? data.term === term : true}
+                termBool={terms.term >= 1 ? data.term === terms.term : true}
                 sortedIndex={sortedIndex}
               />
             );
@@ -109,7 +102,7 @@ const Content = ({ menus, windows }) => {
 };
 
 const mapStateToProps = (state) => {
-  return { menus: state.menus, windows: state.windows };
+  return { menus: state.menus, windows: state.windows, terms: state.terms };
 };
 
 export default connect(mapStateToProps)(Content);

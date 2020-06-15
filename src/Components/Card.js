@@ -156,7 +156,7 @@ const Card = ({ cardWidth, data, rowMaxCount, sortedIndex, termBool }) => {
           bgColor={data.bgColor}
           focused={focused}
         >
-          TERM = {data.term}
+          {data.term === 1 ? "React" : data.term === 2 ? "Full-Stack" : "Other"}
         </ImageDiv>
         <IconBox focused={focused}>
           <IconPlus url={icon_plus} />

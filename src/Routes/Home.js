@@ -10,7 +10,7 @@ const Wrapper = styled.div`
   overflow-x: hidden;
 `;
 
-const Home = ({ windows, toggleMenu, resizeWindow }) => {
+const Home = ({ toggleMenu, resizeWindow }) => {
   // console.log(windows);
 
   useEffect(() => {
