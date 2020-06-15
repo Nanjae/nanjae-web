@@ -51,8 +51,8 @@ const IconPlus = styled.div`
   background-image: url(${(props) => props.url});
   background-size: cover;
   background-position: center;
-  width: 18px;
-  height: 18px;
+  width: 17px;
+  height: 17px;
 `;
 
 const ImageDiv = styled.div`
